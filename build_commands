@@ -1,0 +1,50 @@
+###########
+
+Build for chrome store for Taskstrike Team:
+
+coffee -j all.js --compile app/spine/spine app/util/gantt_view app/util/async_counter app/model_helpers/rest_requests app/util/set app/spine/spine.model.websql app/spine/spine.model.dropbox_sync app/model_helpers/task_gcloud app/model_helpers/list_gcloud app/model_helpers/crud_dropbox app/models/task app/model_helpers/sync app/controllers/application app/controllers/application_setting app/controllers/application_users app/controllers/calendar app/controllers/gantt app/util/initialize app/util/error_handling app/controllers/application_general app/controllers/subtask app/controllers/hotkeys app/util/dropbox_function
+
+####################
+normal build:
+/Library/Application\ Support/Titanium/sdk/osx/1.2.0.RC6e/tibuild.py -d . -t bundle -j -p PACKAGE -r Gtasktic/
+
+Do all this before building
+cat css/dialogs.css css/tipsy.css css/ui.notify.css css/wunderlist.css css/app.css > alldacss.css
+
+coffee -j all.js --compile app/model_helpers/rest_requests app/spine/spine app/util/set app/util/async_counter app/spine/spine.model.websql app/models/task app/model_helpers/sync app/controllers/application app/controllers/application_setting app/controllers/calendar app/util/initialize app/util/error_handling app/controllers/application_general app/controllers/subtask app/controllers/hotkeys
+
+coffee -j all.js --compile app/rest_requests app/spine app/set app/spine.model.sqlite app/task app/sync app/application app/application_setting app/calendar app/initialize app/error_handling app/application_general app/hotkeys app/subtask
+
+uglifyjs -o allcomp.js  all.js
+
+cat lib/json2.js lib/jquery.tmpl.js lib/jquery.ui.1.8.10.min.js lib/jquery.async.js lib/shortcuts.js lib/encoder.js lib/dateformat.js lib/jquery.notify.min.js > alllibs.js
+
+
+Build for store:
+
+1. Change application version number in the xml
+
+2. Build package
+
+sudo /Library/Application\ Support/Titanium/sdk/osx/1.2.0.RC6e/tibuild.py -d . -t bundle -j -p PACKAGE -n --appstore Gtasktic/
+
+3. chmod the permissions
+sudo chmod -R 777 Gtasktic.app
+
+4. Change info.plist
+Add application category
+
+5. Sign package
+codesign -f -v -s "3rd Party Mac Developer Application: Ray Wang" Gtasktic.app
+
+6. productbuild package
+
+productbuild --component Gtasktic.app /Applications --sign "3rd Party Mac Developer Installer: Ray Wang" --product Gtasktic.app/Contents/Info.plist Gtasktic.pkg
+
+coffee -j all.js --compile app/spine/spine app/util/async_counter app/model_helpers/rest_requests app/util/set app/spine/spine.model.websql app/spine/spine.model.cloud_sync app/model_helpers/task_gcloud app/model_helpers/list_gcloud app/models/task app/model_helpers/sync app/controllers/application app/controllers/application_setting app/controllers/calendar app/util/initialize app/util/error_handling app/controllers/application_general app/controllers/subtask app/controllers/hotkeys
+
+
+
+coffee -j all.js --compile app/spine/spine app/util/gantt_view app/util/async_counter app/model_helpers/rest_requests app/util/set app/spine/spine.model.websql app/spine/spine.model.dropbox_sync app/model_helpers/task_gcloud app/model_helpers/list_gcloud app/model_helpers/crud_dropbox app/models/task app/model_helpers/sync app/controllers/application app/controllers/application_setting app/controllers/application_users app/controllers/calendar app/controllers/gantt app/util/initialize app/util/error_handling app/controllers/application_general app/controllers/subtask app/controllers/hotkeys app/util/dropbox_function
+
+/Users/raywang/Downloads/crunchme-0.4/bin/crunchme-mac all.js allcrunched.js

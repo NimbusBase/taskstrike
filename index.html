@@ -1,0 +1,595 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<title>Taskstrike</title>
+
+	<script type="text/javascript">
+	if (document.images) {
+	    img1 = new Image();
+	    img1.src = "images/black_linen_v2.png";
+	    img2 = new Image();
+	    img2.src = "images/cloud_logo.png";	    
+	}
+	</script>
+	<link type="text/css" rel="stylesheet" href="css/loading.css">
+	<link type="text/css" rel="stylesheet" href="css/todo.css">
+
+	<link type="text/css" rel="stylesheet" href="css/custom-theme/jquery-ui-1.8.16.custom.css">
+	<link type="text/css" rel="stylesheet" href="css/ui.notify.css">
+	<link type="text/css" rel="stylesheet" href="css/people.css">
+	<link type="text/css" rel="stylesheet" href="css/joyride-1.0.3.css">
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+	
+	<!-- Nimbus -->
+	<script src="http://nimbusbase.com/static/nimbus.min.js"></script>
+	
+	<script src="lib/json2.js" type="text/javascript" charset="utf-8"></script>
+  	<script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
+	<script src="lib/jquery.tmpl.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- Loading external libraries -->
+	<script type="text/javascript" src="lib/jquery.ui.1.8.10.min.js"></script>
+	<script type="text/javascript" src="lib/jquery.async.js"></script>
+	<script type="text/javascript" src="lib/shortcuts.js"></script>
+	<script type="text/javascript" src="lib/encoder.js"></script>
+  
+	<script src="lib/dateformat.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jquery.notify.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/moment.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="lib/jquery.joyride.js" type="text/javascript"></script>
+	<script src="lib/bootstrap-dropdown.js" type="text/javascript"></script>
+
+	<!-- app -->
+	<script src="app/controllers/auth.js" type="text/javascript" charset="utf-8"></script>
+	<script src="app/spine/spine.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="app/spine/spine.model.local.js" type="text/javascript" charset="utf-8"></script>
+	<script src="app/models/task.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="app/controllers/application.js" type="text/javascript" charset="utf-8"></script>
+	<script src="app/controllers/application_setting.js" type="text/javascript" charset="utf-8"></script>
+	<script src="app/controllers/application_general.js" type="text/javascript" charset="utf-8"></script>
+	<script src="app/controllers/subtask.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="app/controllers/hotkeys.js" charset="utf-8"></script>
+
+
+	<!-- fullcalendar shizzle -->
+	<!-- <link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.css' />
+	<script type='text/javascript' src='fullcalendar/fullcalendar.js'></script> -->
+	
+	<!-- page division -->
+	<script src="lib/jquery.layout-latest.js" type="text/javascript" charset="utf-8"></script>
+	<link type="text/css" rel="stylesheet" href="css/layout.css">
+
+	<script type="text/x-jquery-tmpl" id="taskTemplate">
+		<div class="item {{if done}}done{{/if}} child_${level} {{if priority}} p_${priority}{{/if}}">
+			
+		  <div class="view" title="Double click to edit...">
+		    <input type="checkbox" {{if done}}checked="checked"{{/if}}> 
+		    <span>${name}</span>
+		    {{if note}}<img src="famfamicons/note.png" class="noteimage" />{{/if}} 
+		    <span class="duedate">{{if start_date}} ${start_date}-${end_date} {{/if}}</span> 
+		    
+		    {{if done == false && status == 1 }} <span class="in_progress" style="font-family: 'glyphish'; font-size: 21px; float: right; position: relative; top:-2px; margin-right: 30px; {{if start_date}} margin-right: 0px {{/if}}">O</span>{{/if}}
+		    <input type="hidden" class="id" value="${id}" />
+		    {{if userid}}
+		    {{tmpl(get_user($item)) "#tagTmpl" }}
+		    {{/if}}
+		    <!-- <span class="assigned" style="float: right; margin-right: 50px;">Ray Wang</span> -->
+		    <a class="destroy"></a>
+		  </div>
+		  
+		  <div class="edit">
+  			<form class="edittask_form">
+	  			<table class="editform">
+	  				<tr>
+	  					<td class="header"><input type="checkbox" {{if done}}checked="checked"{{/if}}></td>
+	  					<td><input class="name" type="text" value="${name}"></td>
+	  				</tr>
+	  				<tr>
+	  					<td class="header" style="vertical-align: top;"><img src="famfamicons/note.png" /></td>
+	  					<td><textarea class="note" rows="2" placeholder="Add a note here" >${note}</textarea></td>
+	  				</tr>
+	  				<tr>
+	  					<td class="header" style="vertical-align: top;"><img src="famfamicons/group.png" /></td>
+	  					<td>
+	  						<select class="user_selection"><option value=""></option></select>
+	  						<span class="labels">status:</span> <select class="status"><option value="1">In Progress</option><option value="0">Not Started</option></select> 
+	  						
+	  						<span class="labels">estimated days:</span> <select class="status"><option value="1"> >= 1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select> 
+	  					</td>
+	  				</tr>
+	  				<tr>
+	  					<td class="header last"><img src="famfamicons/shape_align_left.png" /></td>
+	  					<td class="last">
+	  						<span class="labels" style="margin-left: 0px">Planned start date:</span> <input type="text" class="datepicker startdate" placeholder="start date" value="${start_date}" />
+	  						<span class="labels" style="margin-left: 0px">Planned completion date:</span> <input type="text" class="datepicker enddate" placeholder="start date" value="${end_date}" />
+	  						<input class="editsave" type="submit" value="Save" />
+	  					</td>
+	  				</tr>	  				
+	  				<!-- <tr>
+	  					<td class="header last"><img src="famfamicons/calendar.png" /></td>
+	  					<td class="last"><input type="text" class="datepicker duedate_field" placeholder="Due date" value="${duedate}" /></td>
+	  				</tr> -->
+	  			</table>
+  			</form>
+		  </div>
+		</div>
+	</script>
+
+	<script type="text/x-jquery-tmpl" id="listTemplate">
+	  <div id="${id}" class="listdiv">
+	  	  <div class="list_header">
+	  	  	  <h1 class="title" style="">${name}</h1>
+		      <div class="list_bar">
+		      	<a class="deletelist"><img src="famfamicons/delete.png" height="14px"/></a>
+		      	<a class="editlist"><img src="famfamicons/pencil.png" height="14px"/></a>
+		      </div>
+		      
+			<!-- <div class="btn-group" style="float: right;">
+			  <button class="btn btn-mini">sort by: </button>
+			  <button class="btn dropdown-toggle btn-mini" data-toggle="dropdown">
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu pull-right">
+			    <li><a class="peoplesort" href="#">people</a></li>
+			    <li><a class="startsort" href="#">start date</a></li>
+			    <li><a class="endsort" href="#">end date</a></li>
+			    <li><a class="statussort" href="#">status</a></li>
+			    <li><a class="prioritysort" href="#">priority</a></li>
+			  </ul>
+			</div> -->
+		    
+		    <!-- <div class="count listbutton" style="float: right;"><span class="countVal"></span> left</div> -->
+		    
+	      </div>
+	      
+	      <div class="items roundedlist connectedsortable" id="${id}_actual"></div>
+	      
+      	  <footer>
+      	  	<a class="clear listbutton" style="">Clear completed</a>
+	        <a class="addtoggle listbutton">Add Tasks</a>
+	        <div class="addinputs" style="display: inline-block;">
+	        	<a class="doneadding listbutton">Done Adding</a>
+				<form class="addform" style="display: inline-block"><input type="text" class="addtasks" placeholder="Add your task here and hit Return for entry" /></form>
+	      	</div>
+	      </footer>
+      </div>
+	</script>
+		
+	<script id="tagTmpl" type="text/x-jquery-tmpl">
+	    <span class="assigned" style="background-color: #${color};">${name}</span>
+	</script>
+
+	<!-- the main css file -->
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+	
+	<!-- jquery colorpicker -->
+	<script src="lib/jquery.simplecolorpicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.simplecolorpicker.css"/>
+	
+</head>
+
+<body id="theapp">
+	<div id="loading" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('images/black_linen_v2.png') #000; z-index: 10000; display: block;">
+
+		<img style="margin: auto; display: block; vertical-align: middle; margin-top: 100px;" src="images/cloud_logo.png" />
+		<ul id="progress">
+		    <li>
+		    <div id="layer1" class="ball"></div> <!-- layer1 control delay animation / ball is effect -->
+		    <div id="layer7" class="pulse"></div> <!-- layer7 control delay animation / pulse is effect  -->
+		    </li>
+		    <li>
+		    <div id="layer2" class="ball"></div>
+		    <div id="layer8" class="pulse"></div>
+		    </li>
+		    <li>
+		    <div id="layer3" class="ball"></div>
+		    <div id="layer9" class="pulse"></div>
+		    </li>
+		    <li>
+		    <div id="layer4" class="ball"></div>
+		    <div id="layer10" class="pulse"></div>
+		    </li>
+		    <li>
+		    <div id="layer5" class="ball"></div>
+		    <div id="layer11" class="pulse"></div>
+		    </li>
+		</ul>
+		
+		<div id="logo_text">
+			<a onclick="window.screencast()">View Screencast</a>
+		</div>
+		
+		<div id="login_buttons" style="display:none;">
+			<button class="blue_button" onclick="Nimbus.Auth.authorize('GDrive')">
+				<text rel="button_signup_or_login">Login with Google Drive</text><br>
+				
+				<span><text>(Recommended)</text></span>
+			</button>
+			
+			<button class="blue_button" onclick="Nimbus.Auth.authorize('Dropbox')">
+				<text rel="button_signup_or_login">Login with Dropbox</text><br>
+				<span><text>*Sharing disabled</text></span>
+			</button>
+		</div>
+	</div>
+
+	<div id="bghelp" style="background-image: url('smooth.png'); background-attachment: fixed; background-origin: initial; background-clip: initial; background-color: rgb(0, 0, 0); display: block; background-position: center top; background-repeat: no-repeat no-repeat; top: 0px;"></div>
+	
+	<div class="pane ui-layout-west">
+		<div id="sidebar_dark">
+			<div class="arrow-left"></div>
+			
+			<a class="sidebar_dark_item selected" onclick="toggle('.sidebar_dark_item', '.app_tab', '#views', '#views_tab')" id="views_tab">
+				<span class="icon">1</span>
+				<span class="text">Tasks</span>
+			</a>
+			<!-- <a class="sidebar_dark_item" onclick="toggle('.sidebar_dark_item', '.app_tab', '#calendarview', '#calendar_tab')" id="calendar_tab">
+				<span class="icon">7</span>
+				<span class="text">Calendar</span>
+			</a> -->
+			<!-- <a class="sidebar_dark_item" onclick="toggle('.sidebar_dark_item', '.app_tab', '#gantt_view', '#gantt_tab')" id="gantt_tab">
+				<span class="icon">©</span>
+				<span class="text">Gantt</span>
+			</a> -->
+			<!-- <a class="sidebar_dark_item" onclick="toggle('.sidebar_dark_item', '.app_tab', '#people_view', '#people_tab')" id="people_tab">
+				<span class="icon">}</span>
+				<span class="text">People</span>
+			</a> -->
+			<a class="sidebar_dark_item" onclick="toggle('.sidebar_dark_item', '.app_tab', '#setting_view', '#setting_tab')" id="setting_tab">
+				<span class="icon">Q</span>
+				<span class="text">Settings</span>
+			</a>
+			
+			<div class="logged_in" style="position: absolute; bottom: 10px">
+				<button id="logout_button" onclick="window.logout()">Logout</button>
+				<img src="images/default-person.gif" id="logged_in_image" />
+			</div>							
+		</div>
+		
+	</div>
+	
+	<div class="pane ui-layout-center" style="">
+		
+		<div id="content" style="left: 0px; display: block; right: 0px;">
+	
+			  <div id="views" class="app_tab">
+		  		<div class="topbar">
+				  	<div id="left">
+				  		<div class="listfilter">
+							<span class="divider"></span>
+							<button class="filterselected" onclick="show_all_div()" id="allbutton" >all</button>
+						</div>
+						<!-- <a class="bottombutton" onclick="Sync()">Sync</a> 
+						<a class="bottombutton" onclick="setting_windows()">Settings</a> -->
+					</div>		
+					<div id="right" style="position: relative; top: -6px; margin-right: 70px;">
+						<a onclick="addlist_window()" class="bottom_button">
+							<span style="color: white; font-size: 22px; position: relative; top: 2px;">+</span>
+							<span class="text">Add List</span>
+						</a>
+					</div>
+		  		</div>
+		  	
+			    <div id="tasks">	
+			     
+			      <div id="listsoftasks">
+			      </div>
+			      
+			    </div>
+			    
+			  </div>		
+			
+			  <!--Deprecated Gantt and calendar view -->
+			  <!-- <div id="calendarview" class="app_tab" style="font-size: 14px">
+			  	<div id='calendar'></div>
+			  </div>
+			  <div id="gantt_view" class="app_tab">
+				<div id='gantt_chart'></div>	
+				
+				<div id='gantt_legend' style="display: block; width: 200px; position: fixed; margin-right: 10px; background-color: rgba(0, 0, 0, 0.5); bottom: 50px; right: 10px; padding: 5px 10px; border-radius: 4px;"></div>
+				
+			  </div> -->	
+			  
+			  
+			  <div id="setting_view" class="app_tab">
+			  	<div class="halfcolumn" id="usermanagement">
+				  	<h1>User Management</h1>
+				  	<div class="dark_block">
+				  		
+						<table id="usertable">
+							<tr>
+								<td><input type="text" placeholder="Add the gmail address of the person you want to share with" id="shareinput"></td>
+								<td>
+									<button onclick="window.add_user()" style="margin-top: 5px; margin-bottom: 5px;" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
+										<span class="ui-button-text" style="width: 80px">Add User</span>
+									</button>								
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<ul class="userlist">
+										<!-- <li class="useritem">
+											<img src="images/default-person.gif" />
+											<span>One tow three four</span>
+											<button class="small_blue_button"><text rel="label_delete_task">Delete User</text></button>
+										</li>
+										<li class="useritem">
+											<img src="images/default-person.gif" />
+											<span>One tow three four</span>
+											<button class="small_blue_button"><text rel="label_delete_task">Delete User</text></button>
+										</li> -->								
+									</ul>
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+				  	</div>
+			  	</div>
+			  	<div class="halfcolumn">
+			  		<h1>Project Management Workspaces</h1>
+				  	<div class="dark_block">
+				  		<ul class="projectlist">
+				  		</ul>
+				  	</div>
+			  	</div>
+        	</div>
+
+			  <div id="people_view" class="app_tab">
+		  		<div class="topbar">
+		            <div id="right" style="position: relative; top: -6px;">
+		              <a onclick="userapp.add_user_window()" class="bottom_button">
+		                <span style="color: white; font-size: 22px; position: relative; top: 2px;">+</span>
+		                <span class="text">Add User</span>
+		              </a>
+		            </div>
+				</div>
+						
+				<ul id="people-list" class="polaroids">
+					
+				</ul>
+				
+			  </div>
+		</div>
+		<div id="menublur"></div>
+	</div>
+	
+	<div class="pane ui-layout-south">
+		<div id="bottombar">
+			<div id="left">
+				<!-- <a onclick="initialize_and_sync_list()"><img id="syncbutton" class="icon" src="images/02-redo@2x.png" height="16" style="position: relative; top: -1px; left: 10px; cursor: pointer;" /></a> -->
+				<button class='small_blue_button' onclick='window.sync_everything()' id="sync_button"><text rel='sync'>sync</text></button>
+			
+			</div>		
+			<div id="right">
+				<a onclick="window.open_help()"><img id="helpbutton" class="icon" src="images/59-info@2x.png" height="16" style="position: relative; top: -4px; right: -20px; cursor: pointer;" /></a>
+			</div>
+		</div>
+	</div>
+
+	<div id="dialog" style="display: none">
+		<p>Go to the following link, login your google account and grant access: 
+		<a id="authlink" onclick="window.settingapp.open_validation_window()" style="color: #0064CD">authorization link</a></p>
+		<br />
+		<a class="ui-button">Copy and paste the validation code from Google; Paste it into here and press validate. </a>
+		<br />
+		<form id="auth_submit">
+			<input class="xlarge" type="text" id="validation" name="code" placeholder="Validation Code"></p>
+			<input type="text" style="display: none" name="client_id" value="784374432524.apps.googleusercontent.com" />
+			<input type="text" style="display: none" name="client_secret" value="u4K1AZXSj8P9hIlEddLsMi6d"/>
+			<input type="text" style="display: none" name="grant_type" value="authorization_code" />
+			<input type="text" style="display: none" name="redirect_uri" value="urn:ietf:wg:oauth:2.0:oob" />
+		</form>
+	</div>
+
+	<div id="dialog_help" style="display: none">
+		<p>
+			<table style="font-size: 12px;width: 280px" id="hotkeytable">
+			  <tr>
+			  	<thead><strong>Hotkeys</strong></thead>
+			  </tr>
+			  <tr>
+			    <td>↑</td>
+			    <td>Move selection up</td>
+			  </tr>
+			  <tr>
+			    <td>↓</td>
+			    <td>Move selection down</td>
+			  </tr>
+			  <tr>
+			    <td>Enter &nbsp;</td>
+			    <td>Open or close the currently selected task</td>
+			  </tr>
+			  <tr>
+			    <td>Del &nbsp;</td>
+			    <td>Delete the currently selected task</td>
+			  </tr>
+			  <tr>
+			    <td>Tab &nbsp;</td>
+			    <td>Subtask add a level</td>
+			  </tr>
+			  <tr>
+			    <td>Shift+Tab</td>
+			    <td>Subtask remove a level</td>
+			  </tr>
+			</table>
+			<br />
+			<strong>Entering a new task:</strong> 
+			Click on the add task button. Enter your task name and press <span class="keyboard">Enter</span> to save the task. You can repeat this action until you have added all your tasks.
+			<br />
+			<br />
+			<strong>Editing a task:</strong>
+			Double click on a task; Or hit the Enter key on the currently selected task. Hit the Enter key again to save.
+			<br />
+			<br />
+			<a href="http://getsatisfaction.com/taskstrike" target="_blank">Contact our support</a>
+		</p>			
+		<br />
+	</div>
+
+	<div id="dialog_help_gantt" style="display: none">
+		<p>
+			The gantt view corresponds to the tasks that you create in the task view. You may edit but not add tasks here.
+			<br />
+			<br />
+			<strong>Editing: </strong>
+			Click to edit. The color of the blocks correspond to whoever they are assigned to, or they are black if no one is assigned. Drag it to whatever date you like. You can also change the length of the task by dragging it at either ends.
+			<br />
+			<br />
+			Undated blocks starts out as a single block on the date they are created.
+			<br />
+			<br />
+			<a href="http://getsatisfaction.com/taskstrike" target="_blank">Contact our support</a>
+		</p>			
+		<br />
+	</div>
+
+	<div id="dialog_screencast" style="display: none; width: 960px">
+		<iframe width="640" height="480" src="http://www.youtube.com/embed/Rd0mGOqI5Dg" frameborder="0" allowfullscreen></iframe>
+		<br />
+	</div>
+
+	<div id="dialog_help_people" style="display: none">
+		<p>
+			<strong>Adding: </strong>
+			Add by clicking on the add user button on top right. After a new card appears, fill in the card.
+			<br />
+			<br />
+			<strong>Editing: </strong>			
+			Click a card to flip it over to the edit view. When editing color, press save, so the color will be saved.
+			<br />
+			<br />
+			<strong>Sharing Project</strong>
+			Sharing should be done through Dropbox's interface by sharing the folder that contains the data for Taskstrike to another dropbox user. This view does not create the sharing permissions.
+			<br />
+			<br />
+			<a href="http://getsatisfaction.com/taskstrike" target="_blank">Contact our support</a>
+		</p>			
+		<br />
+	</div>
+
+	<div id="dialog_addlist" style="display: none">
+		<p>Name of the list: <br />
+		<input class="input-login" type="text" id="list_name" name="name" placeholder="name"></p>
+		<br />
+		<p>Description for the list: <br />
+		<input class="input-login" type="text" id="list_description" name="description" placeholder="description"></p>
+	    
+	</div>
+	
+	<div id="dialog_task" style="display: none">
+		<form class="edittask_form" id="edit_task_dialog">       
+			<table class="editform">        
+				<tbody>
+					<tr>         
+						<td class="header"><input type="checkbox"></td>         
+						<td><input class="name" id="dialog_task_name" type="text" value="new edited"></td>        
+					</tr>        
+					<tr>         
+						<td class="header" style="vertical-align: top;"><img src="famfamicons/note.png"></td>         
+						<td><textarea class="note" id="dialog_task_note" rows="2" placeholder="Add a note here"></textarea></td>        
+					</tr>        
+					<tr>         
+						<td class="header" style="vertical-align: top;"><img src="famfamicons/group.png"></td>         
+						<td>          
+							<select class="user_selection" id="dialog_task_user_id" onchange="window.hide_based_on_user()"></select>       
+						</td>       
+					</tr>
+					<tr>         
+						<td class="header" style="vertical-align: top;"><img src="famfamicons/star.png" alt="priority"></td>         
+						<td>          
+							<select class="priority" id="dialog_task_priority">
+								<option value="0">Low</option>
+								<option value="1">Medium</option>
+								<option value="2">High</option>
+							</select>     
+						</td>       
+					</tr>					
+					<tr id="dialog_task_status_row">         
+						<td class="header" style="vertical-align: top;"><img src="famfamicons/information.png"></td>         
+						<td>          
+							<select class="status" id="dialog_task_status">
+								<option value="0">Not Started</option>
+								<option value="1">In Progress</option>
+							</select>     
+						</td>       
+					</tr>   					  
+					<tr>         
+						<td class="header last" style="vertical-align: top;"><img src="famfamicons/shape_align_left.png" style="top: 5px;"></td>         
+						<td class="last">          
+							<span class="labels" style="margin-left: 0px">Planned start date:</span> 
+							<input type="text" id="dialog_task_startdate" class="datepicker startdate" placeholder="start date" value="" id="dp1335416544184"> <br />        
+							<span class="labels" style="margin-left: 0px">Planned completion date:</span> 
+							<input type="text" id="dialog_task_enddate" class="datepicker enddate" placeholder="start date" value="" id="dp1335416544185">          
+						</td>       
+					</tr>      
+				</tbody>
+			</table>      
+		</form>
+	</div>
+	
+
+	<div id="dialog_changebackground" style="display: none">
+		<div id="holder" style="min-height: 100px; background-color: #eee; border-radius: 5px"></div>
+		<br />
+		<p>Choose an image file: <br />
+		<input class="input-login" id="fileuploader" type="file" id="background_file" name="description" placeholder="description"></p>
+				    
+	</div>
+
+	<div id="dialog_confirmdelete" style="display: none">
+		<p>Do you want to delete the list? (All the task under it will be deleted too) </p>
+				    
+	</div>
+
+	<div id="container" style="display:none">
+
+		<div id="default">
+			<h1>#{title}</h1>
+			<p>#{text}</p>
+		</div>
+
+		<div id="sticky">
+			<a class="ui-notify-close ui-notify-cross" href="#">x</a>
+			<h1>#{title}</h1>
+			<p>#{text}</p>
+		</div>
+
+		<div id="withIcon">
+			<a class="ui-notify-close ui-notify-cross" href="#">x</a>
+			<div style="float:left;margin:0 10px 0 0"><img src="#{icon}" alt="warning" /></div>
+			<h1>#{title}</h1>
+			<p>#{text}</p>
+		</div>
+
+		<div id="buttons">
+			<h1>#{title}</h1>
+			<p>#{text}</p>
+			<p style="margin-top:10px;text-align:center">
+				<input type="button" class="confirm" value="Close Dialog" />
+			</p>
+		</div>
+	</div>
+
+	<!-- Tour Content -->
+	<ol id="joyRideTipContent">
+	  <li data-id="setting_tab" data-text="Next" class="custom">
+	    <p>Welcome to Taskstrike Team! First go to the setting menu, and link your Dropbox account.</p>
+	  </li>
+	  <li data-id="syncbutton" data-text="Next" data-options="tipLocation:top;tipAnimation:fade">
+	    <p>Then click on the sync button to store your project</p>
+	  </li>
+	  <li data-id="views_tab" data-text="Next">
+	    <p>Add some tasks to create your first project, any of your changes should be auto-synced. However, pulling new changes requires pushing the sync button.</p>
+	  </li>
+	  <li data-id="helpbutton" data-text="Close" data-options="tipLocation:bottomright;">
+	    <p>Click on help on each page, to get more information. There are many hotkeys on the task page, and it's suggested you check them out.</p>
+	  </li>	  
+	 
+	</ol>
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>

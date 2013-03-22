@@ -1,0 +1,34 @@
+/*polaroid shit	*/
+/* -------------------------------------------------- */
+
+ul.polaroids { width: 100%; margin: 0 0 18px -30px; }
+ul.polaroids li { display: inline; float: left; margin: 10px; }
+ul.polaroids a { background: #fff; display: inline; float: left; margin: 0px; width: auto; padding: 10px 10px 15px; text-align: center; font-family: "Marker Felt", sans-serif; text-decoration: none; color: #333; font-size: 18px; -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25); -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25); -webkit-transition: -webkit-transform .15s linear; height: 223px; }
+ul.polaroids .user_image { display: block; width: 190px; height: 190px; margin-bottom: 12px; background-position: center center; background-size: 100% 100%; }
+/*ul.polaroids a:after { content: attr(title); } */
+
+.edit_user { text-align: center; font-family: "Marker Felt", sans-serif; font-size: 18px; padding: 10px; padding-top: 15px; padding-left: 0px; }
+
+.person-form-field{ margin-left: 5px; margin-top: 0px; width: 100%; }
+
+.person-form-field input { width: 90%; margin-left: 0px; margin-bottom: 3px; }
+
+.person-field { font-weight: bold; margin-right: 5px; margin-left: 5px; font-size: 11px; float: left; }
+
+ul.polaroids .back, ul.polaroids .front { background-color: #fff; width: 190px; margin-bottom: 12px; margin-left: 15px;}
+
+ul.polaroids li a:hover { -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.5); -moz-box-shadow: 0 3px 6px rgba(0,0,0,.5); position: relative; z-index: 5; }
+
+code { background: rgba(0,0,0,.5); padding: 2px 3px; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,.75); -webkit-border-radius: 3px; -moz-border-radius: 3px; }
+
+ol.code { background: rgba(0,0,0,.75); margin-bottom: 18px; border: solid rgba(0,0,0,.75); border-width: 1px 1px 0; -webkit-border-radius: 3px; -moz-border-radius: 3px; -webkit-box-shadow: 0 1px 1px rgba(255,255,255,.5); }
+ol.code li, ol.code li code { font-size: 14px !important; }
+ol.code code { background: none; }		
+
+.person-delete { background-image: url('../images/31-circle-x@2x.png'); width: 20px; height: 20px; background-size: 100% 100%; border: 0px; background-color: white; cursor: pointer }
+.person-delete { position: absolute; background-color: transparent; right: 15px; top: 15px; display: none; }
+.person:hover .person-delete { display: block; }
+
+.picture_field { padding: 5px; margin-top: 3px; border: 1px solid #CCC; border-radius: 3px; }
+
+.edituserbutton, .cancelbutton { cursor: pointer }

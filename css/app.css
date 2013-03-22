@@ -1,0 +1,535 @@
+/**/
+
+
+/* app styling */
+.roundedlist {
+	margin-bottom: 12px;
+	margin-top: 12px;
+}
+
+.roundedlist li .item {
+	color: #4E4E4E;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	-webkit-box-shadow: #333 0px 1px 3px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#EEE), to(white));
+	border-radius: 5px 5px;
+	cursor: pointer;
+	margin-bottom: 5px;
+	min-height: 20px;
+	overflow: visible;
+	padding: 7px 0px 0px 0px;
+	position: relative;
+}
+
+.roundedlist li.task_selected .item {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#D0E4F5), to(#D0E4F5));
+}
+
+#tasks li input[type="text"] {
+  font-family: inherit;
+  line-height: 1em;
+  border: 0;
+  outline: none;
+  padding: 2px;
+  padding-left: 15px;
+  border-radius: 15px 15px;
+  
+  -webkit-box-shadow: #999 1px 1px 3px inset;
+  
+  width: 90%;
+}
+
+#tasks input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+#tasks .items {
+  margin: 10px 0;
+  list-style: none;
+}
+
+#tasks .item.done span {
+  color: #777777;
+  text-decoration: line-through;
+}
+
+#tasks .item .destroy {
+  position: absolute;
+  right: 10px;
+  top: 16px;
+  display: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url('../icons/delete_active.png') no-repeat center center;
+}
+
+#tasks .item:hover .destroy {
+  top: 4px;
+  display: block;
+}
+
+#tasks .item .edit { display: none; }
+#tasks .item.editing .edit { display: block; }
+#tasks .item.editing .view { display: none; }
+
+#tasks .item span {
+	margin-left: 15px;
+}
+
+#tasks .done {
+	opacity: 0.3;
+}
+
+.addwrapper #addingdiv  {
+	border: 0px;  
+}
+
+div.add .ui-datepicker-trigger {
+	position: absolute;
+	top: 0px;
+	left: -25px;
+}
+
+.item .duedate {
+	float: right;
+	margin-right: 50px;
+	font-weight: bold;
+}
+
+.item .datepicker {
+	float: right;
+}
+
+.editform {
+	width: 100%;
+	border-collapse:collapse;
+	margin: 3px 0px;
+}
+
+.editform td {
+	border-bottom: 1px solid #ddd;
+	padding: 3px 5px;
+	height: 25px;
+}
+
+.editform input {
+	float: left;
+	position: relative;
+	left: -5px;
+}
+
+.editform .header {
+	width: 20px;
+}
+
+.editform td.last {
+	border-bottom: 0px;
+}
+
+.header img {
+	position: relative;
+	left: 0px;
+} 
+
+#tasks .editform input[type="text"], #tasks .editform textarea {
+	border-radius: 0px;
+	border: 0px;
+	-webkit-box-shadow: none;
+	padding: 0px;
+	margin: 0px;
+	background: transparent;
+	width: 90%;
+	float: left;
+	margin-left: 5px;
+}
+
+#tasks .editform textarea {
+	margin-left: 2px;
+}
+
+.editform input.editsave {
+	background-color: #888;
+	color: #fff;
+	padding: 2px 7px;
+	border-radius: 5px 5px;
+	float: right;
+	margin-right: 5px;
+	margin-top: 1px;
+}
+
+.roundedlist li .editing {
+	padding-top: 2px;
+}
+
+.editform .name {
+	position: relative;
+	top: -2px;
+}
+
+.editform .datepicker {
+	position: relative;
+	top: 2px;
+}
+
+.view .noteimage {
+	margin-left: 5px;
+	vertical-align: middle;
+	position: relative;
+	top: -2px;
+}
+
+.listbutton {
+	border-radius: 10px 10px;
+	padding: 3px 10px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#EEE), to(white));
+	-webkit-box-shadow: #333 0px 1px 3px;
+	display: inline;
+	color: #4E4E4E;
+}
+
+a.listbutton {
+	cursor: hand;
+}
+
+/* top bar */
+#title {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 40px;
+	width: 100%; 
+	border-bottom: 1px solid #C5C5C5;
+	background: transparent;  
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+	z-index: 1002;
+}
+
+#bottombar {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	height: 30px;
+	width: 100%;
+	-webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+	background: -webkit-gradient(linear, left top, left bottom, from(#DEDFE0), to(#CACACA));
+}
+
+#buttonbar a.filter:hover, #buttonbar a.active {
+	color: white;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(184,184,184,1)), color-stop(6%,rgba(184,184,184,1)), color-stop(22%,rgba(182,176,182,1)), color-stop(83%,rgba(151,151,151,1)), color-stop(100%,rgba(145,143,145,1)));		
+}
+
+#buttonbar a {
+	-webkit-box-shadow: 0px 0px 0px;
+	box-shadow: 0px 0px 1px #DDD;
+	padding: 0px 8px;
+	text-shadow: none;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(249,249,249,1)), color-stop(6%,rgba(249,249,249,1)), color-stop(22%,rgba(242,241,242,1)), color-stop(83%,rgba(204,204,204,1)), color-stop(100%,rgba(196,195,196,1)));			
+	padding-top: 5px;
+	border-left: 1px solid #434343;
+	float: left;
+	color: #333;
+	display: block;
+	cursor: pointer;
+	height: 18px;
+	font-size: 11px;
+	border-top: 1px solid #343434;
+	border-bottom: 1px solid #343434;
+}
+
+#buttonbar .roundedright {
+	border-right: 1px solid #343434;
+	-webkit-border-radius: 0px 10px 10px 0px;
+	border-radius: 0px 5px 5px 0px;
+	margin-right: 12px;
+}		
+
+#buttonbar .roundedleft {
+	border-left: 1px solid #343434;
+	border-radius: 10px 0px 0px 10px;
+	-webkit-border-radius: 5px 0px 0px 5px;
+}
+
+#buttonbar {
+	float: left;
+	padding: 8px;
+	padding-right: 0px;
+	padding-left: 9px;
+	padding-top: 5px;
+}
+
+#iconbar {
+	float: right;
+	padding: 8px;
+	padding-right: 0px;
+	padding-right: 9px;
+	padding-top: 0px;
+}
+
+#iconbar .icon {
+	padding: 5px;
+	margin: 2px;
+}
+
+#iconbar .icon:hover {
+	border: 1px solid #999;
+	margin: 1px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(249,249,249,1)), color-stop(6%,rgba(249,249,249,1)), color-stop(22%,rgba(242,241,242,1)), color-stop(83%,rgba(204,204,204,1)), color-stop(100%,rgba(196,195,196,1)));			
+}
+
+#iconbar .disabled:hover {
+	border: none !important;
+}
+
+#iconbar .icon:active {
+	-webkit-box-shadow: inset 0 0 2px 2px #d3d3d3;
+}
+
+#content {
+	bottom: 30px;
+	padding-bottom: 15px;
+}
+.ui-notify {
+	width: 350px;
+	position: fixed;
+	top: 50px;
+	right: 20px;
+}		
+
+/* list header */
+.list_header {
+	margin-top: 15px;
+}
+	
+.listdiv .list_bar {
+	width: 100%; 
+	background-color: #fff; 
+	-webkit-box-shadow: #333 0px 1px 3px; 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#EEE), to(white)); 
+	border-radius: 10px 10px; 
+	padding-top: 7px; 
+	padding-right: 7px; 
+	padding-left: 7px;
+	display:none;
+}
+
+.list_bar a {
+	cursor: hand;
+}
+
+.listdiv .title {
+	display: inline; 
+	width: 100%; 
+	margin-right: 5px;
+}
+
+.listdiv:hover .list_bar {
+	display: inline; 
+}
+
+/* div.add {
+	background: none;
+	height: 17px;
+}*/
+
+.largebutton {
+	font-size: 14px;
+	padding: 4px 12px;
+	border-radius: 10px 10px;
+}
+
+/*action on bottom buttons*/
+.bottom_button {
+	font-size: 14px; 
+	font-weight:bold; 
+	float: left; 
+	vertical-align: middle;
+	cursor: hand;
+}
+
+.bottom_button .icon {
+	height: 13px; 
+	margin-right: 2px; 
+	opacity: 0.5;
+}
+
+.bottom_button span {
+	top: -1px; 
+	position: relative;
+	opacity: 0.7;
+}
+
+.bottom_button:hover span {
+	opacity: 1;
+}
+
+.bottom_button:hover .icon {
+	opacity: 0.7;
+}
+
+.editing #addlistbutton {
+	display: none;
+}
+
+.adding #editlistbutton {
+	display: none;
+}
+
+/*bottom right list filter stuff*/
+.listfilter button {
+	background-color: transparent;
+	background: none;
+	text-shadow: none;
+	box-shadow: none;
+	border: none;
+	
+	display: inline-block;
+	margin: 1px 2px 0 0;
+	padding: 1px 7px 3px;
+	font-size: 12px;
+	line-height: 13px;
+	font-weight: bold;
+	color: #2E2E2E;
+	background: transparent;
+	text-shadow: rgba(255, 255, 255, 0.5) 0 1px 0;
+	-webkit-border-radius: 8px;
+	vertical-align: middle;
+	float: right;
+}
+
+.listfilter button:hover, .listfilter button.filterselected {
+	color: white;
+	text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+	background: rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5) inset, 0 -1px 1px rgba(255, 255, 255, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.listfilter {
+	position: relative;
+	top: -4px;
+	left: 30;
+}
+
+.divider {
+	margin: 1px 9px 0 8px;
+	background-color: rgba(0, 0, 0, 0.4);
+	height: 16px;
+	width: 1px;
+	vertical-align: middle;
+	display: inline-block;
+	float:right;
+}
+
+/*calendar styling to be whiter*/
+.fc-grid th {
+	color: #CCC;	
+}	
+
+.fc-grid .fc-day-number {
+	color: #ddd;
+}
+
+/* list div narrower */
+/* .listdiv {
+	width: 31%;
+	float: left;
+	margin-left: 2%;
+}
+
+.firstlist .listdiv {
+	margin-left: 0px;
+}
+*/
+
+/*Fix count looking like a button */
+.count {
+	background: #fff;
+	opacity: 0.5;
+	border-radius: 4px;	
+}
+
+/* add task on the toolbar change */
+.addtasks {
+	position: relative;
+	height: 25px;
+	background: url('../images/transparentgradient.png') repeat-x right top;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 0px;
+	color: #fff;
+	padding-left: 10px;
+	width: 400px;
+}
+
+/* subtask shit */
+.child_1 {
+	margin-left: 25px;
+}
+
+.child_2 {
+	margin-left: 50px;
+}
+
+.child_3 {
+	margin-left: 75px;
+}
+
+.child_4 {
+	margin-left: 100px;
+}
+
+/*set stuf so disabled links have different opacity*/
+.disabled {
+	opacity: 0.5 !Important;
+}
+
+/*css for calendar*/
+.finished_task .fc-event-skin {
+	border-color:  #bbb !important;
+	/* background: -webkit-linear-gradient(#CACACA, #eee, #CACACA); */
+	background: -webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(white));
+	color: #444 !important;
+	color: #999;
+}
+
+.finished_task {
+	border-color:  #bbb !important;
+}
+
+/* css for change background */
+#holder {
+	margin-top: 0px;
+}
+
+#holder img {
+	border-radius: 5px;
+}
+
+/* css datepicker */
+#ui-datepicker-div {
+	position: relative;
+	top: 300px;
+	display: none;
+}
+
+/* overlay  */
+.ui-widget-overlay {
+	position: relative !important; 
+	top: 40px !important;
+}
+
+
+/*input color change and height change*/
+.addform input[type="text"] {
+	font-size: 12px;
+	line-height: 12px;
+	color: #eee;
+	margin-left: 5px;
+}
+
+a {
+	cursor: pointer;
+}
