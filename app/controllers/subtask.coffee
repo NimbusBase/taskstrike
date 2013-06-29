@@ -94,7 +94,7 @@ window.test_array_4 = [ h, i, j ]
 ###
 window.counter = 0
 window.bypass= {}
-window.parent= {}
+window.task_parent= {}
 
 #a recusive function that assigns level and order to it's children
 window.assign_children = ( parent, childs, parent_dict ) ->
@@ -112,7 +112,7 @@ window.assign_children = ( parent, childs, parent_dict ) ->
 #assume they are all in the same list
 window.assign_order = (tasks) ->
   window.counter = 0
-  window.parent = {}
+  window.task_parent = {}
   
   window.currently_syncing = true
   
@@ -125,16 +125,16 @@ window.assign_order = (tasks) ->
   #process the list for children to create a { parent_id: children } dictionary
   for task in tasks
     if task.parent_id?
-      if window.parent[task.parent_id]?
-        (window.parent[task.parent_id]).push( task)
+      if window.task_parent[task.parent_id]?
+        (window.task_parent[task.parent_id]).push( task)
       else 
-        window.parent[task.parent_id] = [ task ]
+        window.task_parent[task.parent_id] = [ task ]
   
-  log("parent div", window.parent)
+  log("parent div", window.task_parent)
   
   for task in tasks
     #if it has a kid entry, put the kid entry after it
-    if window.parent[task.id]? and ( (task.parent_id is null) or (task.parent_id is "") or (task.parent_id is undefined) )# make sure it's not a bypass and not a child
+    if window.task_parent[task.id]? and ( (task.parent_id is null) or (task.parent_id is "") or (task.parent_id is undefined) )# make sure it's not a bypass and not a child
       #log( "#root parent: ", task.name )      
       task.order = window.counter
       task.level = 0
