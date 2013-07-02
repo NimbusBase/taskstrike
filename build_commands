@@ -4,6 +4,33 @@ Build for chrome store for Taskstrike Team:
 
 coffee -j all.js --compile app/spine/spine app/util/gantt_view app/util/async_counter app/model_helpers/rest_requests app/util/set app/spine/spine.model.websql app/spine/spine.model.dropbox_sync app/model_helpers/task_gcloud app/model_helpers/list_gcloud app/model_helpers/crud_dropbox app/models/task app/model_helpers/sync app/controllers/application app/controllers/application_setting app/controllers/application_users app/controllers/calendar app/controllers/gantt app/util/initialize app/util/error_handling app/controllers/application_general app/controllers/subtask app/controllers/hotkeys app/util/dropbox_function
 
+coffee -j total.js --compile \
+	app/spine/spine.coffee \ 
+	app/util/gantt_view.coffee \ 
+	app/util/async_counter.coffee \ 
+	app/model_helpers/rest_requests.coffee \ 
+	app/util/set.coffee \ 
+	app/spine/spine.model.websql.coffee \ 
+	app/spine/spine.model.dropbox_sync.coffee \ 
+	app/model_helpers/task_gcloud.coffee \ 
+	app/model_helpers/list_gcloud.coffee \ 
+	app/model_helpers/crud_dropbox.coffee \ 
+	app/models/task.coffee \ 
+	app/model_helpers/sync.coffee \ 
+	app/controllers/application.coffee \ 
+	app/controllers/application_setting.coffee \
+	app/controllers/application_users.coffee \ 
+	app/controllers/calendar.coffee \ 
+	app/controllers/gantt.coffee \ 
+	app/util/initialize.coffee \ 
+	app/util/error_handling.coffee \
+	app/controllers/application_general.coffee \ 
+	app/controllers/subtask.coffee \ 
+	app/controllers/hotkeys.coffee \ 
+	app/util/dropbox_function.coffee
+
+coffee -j total.js --compile app/spine/spine.coffee app/util/gantt_view.coffee app/models/task.coffee app/controllers/application.coffee app/controllers/application_setting.coffee app/controllers/application_users.coffee app/controllers/calendar.coffee app/controllers/gantt.coffee app/util/initialize.coffee app/util/error_handling.coffee app/controllers/application_general.coffee app/controllers/subtask.coffee app/controllers/hotkeys.coffee
+
 ####################
 normal build:
 /Library/Application\ Support/Titanium/sdk/osx/1.2.0.RC6e/tibuild.py -d . -t bundle -j -p PACKAGE -r Gtasktic/
@@ -48,3 +75,13 @@ coffee -j all.js --compile app/spine/spine app/util/async_counter app/model_help
 coffee -j all.js --compile app/spine/spine app/util/gantt_view app/util/async_counter app/model_helpers/rest_requests app/util/set app/spine/spine.model.websql app/spine/spine.model.dropbox_sync app/model_helpers/task_gcloud app/model_helpers/list_gcloud app/model_helpers/crud_dropbox app/models/task app/model_helpers/sync app/controllers/application app/controllers/application_setting app/controllers/application_users app/controllers/calendar app/controllers/gantt app/util/initialize app/util/error_handling app/controllers/application_general app/controllers/subtask app/controllers/hotkeys app/util/dropbox_function
 
 /Users/raywang/Downloads/crunchme-0.4/bin/crunchme-mac all.js allcrunched.js
+
+
+######## newest version NimbusBase #############
+coffee -j all.js --compile app/controllers/auth.coffee app/spine/spine.coffee app/spine/spine.model.local.coffee app/models/task.coffee app/controllers/application.coffee app/controllers/application_setting.coffee app/controllers/application_general.coffee app/controllers/subtask.coffee app/controllers/hotkeys.coffee
+
+cat lib/jquery-1.7.1.min.js lib/jquery.tmpl.js lib/json2.js lib/jquery.tmpl.js lib/jquery.ui.1.8.10.min.js lib/jquery.async.js lib/shortcuts.js lib/encoder.js lib/dateformat.js lib/jquery.notify.min.js all.js > total.js
+
+
+
+
