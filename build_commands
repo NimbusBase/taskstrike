@@ -80,7 +80,7 @@ coffee -j all.js --compile app/spine/spine app/util/gantt_view app/util/async_co
 ######## newest version NimbusBase #############
 coffee -j all.js --compile app/controllers/auth.coffee app/spine/spine.coffee app/spine/spine.model.local.coffee app/models/task.coffee app/controllers/application.coffee app/controllers/application_setting.coffee app/controllers/application_general.coffee app/controllers/subtask.coffee app/controllers/hotkeys.coffee
 
-cat lib/jquery-1.7.1.min.js lib/jquery.tmpl.js lib/json2.js lib/jquery.tmpl.js lib/jquery.ui.1.8.10.min.js lib/jquery.async.js lib/shortcuts.js lib/encoder.js lib/dateformat.js lib/jquery.notify.min.js all.js > total.js
+cat lib/jquery-1.7.1.min.js lib/empty.js lib/jquery.simplecolorpicker.js lib/empty.js lib/jquery.layout-latest.js lib/empty.js lib/jquery.tmpl.js lib/empty.js lib/json2.js lib/empty.js lib/jquery.tmpl.js lib/empty.js lib/jquery.ui.1.8.10.min.js lib/empty.js lib/jquery.async.js lib/empty.js lib/shortcuts.js lib/empty.js lib/encoder.js lib/empty.js lib/dateformat.js lib/empty.js lib/jquery.notify.min.js lib/empty.js all.js > total.js
 
 
 
